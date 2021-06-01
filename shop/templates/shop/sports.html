@@ -1,0 +1,127 @@
+{% load static %}
+{% static "shop" as baseUrl %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+     
+    <title>NewsScribe</title>
+  </head>
+  <style>
+.sidenav {
+  width: 180px;
+  position: fixed;
+  z-index: 1;
+  top: 56px;
+  left: 0px;
+  background: #FFE303;
+  overflow-x: hidden;
+  padding: 8px 0;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #615E3F;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #064579;
+}
+
+.main {
+  margin-left: 140px; /* Same width as the sidebar + left position in px */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+  </style>
+  
+  <body>
+   
+
+    <nav class="navbar navbar-expand-lg navbar-light "  style="background-color: #d4d400;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">NewsScribe</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            
+              <li class="nav-item">
+              {% if user.is_authenticated%}
+                <a class="nav-link active" aria-current="page" >Hi {{user.first_name}}!</a>
+                {% else %}
+                 <a class="nav-link active" aria-current="page" href="/account/register">SignUp/Login</a>
+              </li>
+              
+              {% endif %}
+           
+              <li class="nav-item dropdown">
+              {% if user.is_authenticated%}
+               <a class="nav-link active" aria-current="page" href="/account/userlogout">Logout</a>
+               {% else %}
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                {% endif %}
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/shop/contact" tabindex="-1" aria-disabled="true">Contact us</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+       <div class="sidenav">
+  <a href="/shop/">All</a>
+  <a href="/shop/buisness/">Buisness</a>
+  <a href="/shop/entertainment/">Entertainment</a>
+  <a href="/shop/health/">Health</a>
+  <a href="/shop/science/">Science</a>
+  <a href="/shop/sports/">Sports</a>
+  <a href="/shop/tech/">Technology</a>
+ 
+   </div>
+    
+      
+      
+        {% for i in g.articles %}
+      <div class="card" style="width:650px; margin: 0 auto;  padding-top: 20px " class="d-flex justify-content-center">
+        <img class="card-img-top" src="{{i.urlToImage}}" alt="Card image" style="height: 300px;">
+        <div class="card-body">
+          <h4 class="card-title">{{i.title}}</h4>
+          <p class="card-text">{{i.description}} </p>
+          <a href="{{i.url}}" class="btn btn-primary">Visit Website</a>
+          <a href="#" class="btn btn-warning">Save</a>
+        </div> 
+        
+        <br>
+        {% endfor %}
+     </div>
+      </div>
+      
+  </body>
+</html>
